@@ -1,0 +1,61 @@
+---
+import Icon from './Icon.astro';
+
+const services = [
+  {
+    icon: 'droplets',
+    title: 'Udrażnianie kanalizacji',
+    description: 'Skuteczne udrażnianie rur i odpływów metodami mechanicznymi i ciśnieniowymi. Usuwamy zatory z tłuszczu, włosów i innych zanieczyszczeń.',
+  },
+  {
+    icon: 'wrench',
+    title: 'Naprawa instalacji',
+    description: 'Kompleksowa naprawa uszkodzonych rur, wymiana zaworów, regeneracja uszczelek. Szybkie i trwałe rozwiązania.',
+  },
+  {
+    icon: 'zap',
+    title: 'Wymiana armatury',
+    description: 'Montaż i wymiana baterii, umywalek, toalet oraz pozostałego wyposażenia łazienek i kuchni.',
+  },
+  {
+    icon: 'camera',
+    title: 'Inspekcja kamerą',
+    description: 'Diagnostyka rur kanalizacyjnych kamerą inspekcyjną. Precyzyjne lokalizowanie awarii i zatorów.',
+  },
+  {
+    icon: 'shield',
+    title: 'Odtwarzanie szczelności',
+    description: 'Usuwanie nieszczelności, naprawa przecieków, renowacja połączeń rurowych bez kucia ścian.',
+  },
+  {
+    icon: 'calendar',
+    title: 'Przeglądy okresowe',
+    description: 'Regularne przeglądy instalacji sanitarnych i zapobiegawcze czyszczenie kanalizacji.',
+  },
+];
+---
+
+<section id="uslugi" class="py-20 lg:py-28 bg-[#0a0a0f]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">
+        Nasze <span class="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">usługi</span>
+      </h2>
+      <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+        Kompleksowe usługi hydrauliczne dla domów i firm w Zielonce oraz okolicach.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {services.map(s => (
+        <div class="group bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 hover:border-violet-500/50 transition-all">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-violet-500/20 to-cyan-500/20 flex items-center justify-center mb-6 group-hover:from-violet-500/30 group-hover:to-cyan-500/30 transition-all">
+            <Icon name={s.icon} class="w-7 h-7 text-violet-400" />
+          </div>
+          <h3 class="text-xl font-semibold mb-3">{s.title}</h3>
+          <p class="text-gray-400 leading-relaxed">{s.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

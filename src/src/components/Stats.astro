@@ -1,0 +1,60 @@
+---
+import { siteConfig } from '../config/site';
+
+const stats = [
+  { value: siteConfig.successRate,    suffix: '%',  label: 'Skuteczność' },
+  { value: 24,                        suffix: 'h',  label: 'Dyżur' },
+  { value: siteConfig.experienceYears, suffix: '+', label: 'Lat doświadczenia' },
+  { value: siteConfig.clients,        suffix: '+',  label: 'Zadowolonych klientów' },
+];
+---
+
+<section class="relative py-16 lg:py-20 bg-[#0a0a0f]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+      {stats.map((s, i) => (
+        <div
+          class="stat-item bg-white/5 border border-white/10 rounded-2xl p-6 text-center"
+          data-value={s.value}
+          data-suffix={s.suffix}
+          data-delay={i * 150}
+        >
+          <div class="stat-count text-4xl md:text-5xl font-bold bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent mb-2">0{s.suffix}</div>
+          <div class="text-gray-400">{s.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const items = document.querySelectorAll<HTMLElement>('.stat-item');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target as HTMLElement;
+      const value  = parseInt(el.dataset.value ?? '0');
+      const suffix = el.dataset.suffix ?? '';
+      const delay  = parseInt(el.dataset.delay ?? '0');
+      const counter = el.querySelector('.stat-count') as HTMLElement;
+
+      setTimeout(() => {
+        let start: number;
+        const duration = 2000;
+        function tick(now: number) {
+          if (!start) start = now;
+          const p = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - p, 4);
+          counter.textContent = Math.floor(eased * value).toLocaleString() + suffix;
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }, delay);
+
+      observer.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+
+  items.forEach(el => observer.observe(el));
+</script>

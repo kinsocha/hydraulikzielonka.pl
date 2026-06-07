@@ -1,0 +1,46 @@
+---
+import Icon from './Icon.astro';
+
+const features = [
+  {
+    icon: 'clock',
+    title: 'Szybka reakcja',
+    description: 'Dojeżdżamy do klienta w ciągu 1–2 godzin. W nagłych przypadkach jesteśmy dostępni 24/7 przez cały tydzień.',
+  },
+  {
+    icon: 'shield',
+    title: 'Gwarancja jakości',
+    description: 'Na wykonane prace dajemy gwarancję. Używamy tylko sprawdzonych materiałów i nowoczesnego sprzętu.',
+  },
+  {
+    icon: 'map-pin',
+    title: 'Lokalna firma',
+    description: 'Jesteśmy z Zielonki i znamy okolicę. Wiemy, jak wyglądają tutejsze instalacje i budynki.',
+  },
+];
+---
+
+<section id="dlaczego-my" class="py-20 lg:py-28 bg-[#0a0a0f]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">
+        Dlaczego <span class="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">my?</span>
+      </h2>
+      <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+        Setki zadowolonych klientów w Zielonce i okolicach.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      {features.map(f => (
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-8 text-center">
+          <div class="w-16 h-16 rounded-full bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center mx-auto mb-6">
+            <Icon name={f.icon} class="w-8 h-8 text-white" />
+          </div>
+          <h3 class="text-xl font-semibold mb-3">{f.title}</h3>
+          <p class="text-gray-400 leading-relaxed">{f.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

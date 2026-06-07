@@ -1,0 +1,229 @@
+---
+import Icon from './Icon.astro';
+import { siteConfig, phoneLabel } from '../config/site';
+import { locations, type LocationData } from '../data/locations';
+
+interface Props {
+  location: LocationData;
+}
+
+const { location } = Astro.props;
+const others = locations.filter(l => l.slug !== location.slug);
+
+const faqSchema = location.faq.length
+  ? JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: location.faq.map(f => ({
+        '@type': 'Question',
+        name: f.question,
+        acceptedAnswer: { '@type': 'Answer', text: f.answer },
+      })),
+    })
+  : '';
+
+const scope = [
+  { icon: 'droplets', title: 'Udrażnianie kanalizacji', desc: 'Mechaniczne i ciśnieniowe usuwanie zatorów w zlewach, toaletach, pionach i odpływach.' },
+  { icon: 'wrench',   title: 'Naprawa instalacji',      desc: 'Wymiana zaworów, naprawa przecieków, regeneracja uszczelek, podłączenia AGD.' },
+  { icon: 'camera',   title: 'Inspekcja kamerą',        desc: 'Diagnostyka wnętrza rur kamerą. Lokalizacja uszkodzeń, załamań i wrastających korzeni.' },
+];
+
+const whyPoints = [
+  'Szybki dojazd – jesteśmy z Zielonki i okolicę znamy od podszewki',
+  'Wycena przed przyjazdem, bez ukrytych opłat',
+  'Sprzęt dopasowany do bloków, kamienic i domów jednorodzinnych',
+  'Pogotowie przy awariach – również wieczorami i w weekendy',
+  'Faktura VAT i możliwość cyklicznych przeglądów',
+];
+---
+
+{faqSchema && <script type="application/ld+json" set:html={faqSchema} is:inline />}
+
+<!-- Hero -->
+<section class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[#0a0a0f] overflow-hidden">
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute top-1/4 -left-32 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl animate-pulse"></div>
+    <div class="absolute bottom-1/4 -right-32 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse" style="animation-delay:1s"></div>
+  </div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center gap-2 text-gray-500 text-sm mb-6">
+      <a href="/" class="hover:text-violet-300 transition-colors">Strona główna</a>
+      <span>/</span>
+      <span class="text-gray-300">{location.fullName}</span>
+    </div>
+    <div class="max-w-4xl">
+      <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 mb-6">
+        <Icon name="map-pin" class="w-4 h-4 text-violet-400" />
+        <span class="text-base text-gray-300">{location.name} i okolice</span>
+      </div>
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+        {location.fullName}
+        <span class="block bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
+          usługi hydrauliczne
+        </span>
+      </h1>
+      <p class="text-lg sm:text-xl text-gray-400 max-w-3xl mb-10 leading-relaxed">{location.heroIntro}</p>
+      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <a
+          href={`tel:${siteConfig.phoneTel}`}
+          class="group flex items-center gap-3 bg-gradient-to-r from-violet-600 to-cyan-600 px-8 py-4 rounded-2xl text-lg font-semibold hover:opacity-90 transition-opacity"
+        >
+          <Icon name="phone" class="w-5 h-5" />
+          <span>{phoneLabel}</span>
+        </a>
+        <a href="#zakres-prac" class="flex items-center gap-2 bg-white/5 border border-white/10 px-8 py-4 rounded-2xl text-lg font-semibold hover:bg-white/10 transition-colors">
+          Zobacz, w czym pomagamy
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Opis -->
+<section class="py-20 lg:py-24 bg-[#0a0a0f]">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6">
+      Hydraulik i udrażnianie w {location.name}
+    </h2>
+    <p class="text-lg text-gray-400 leading-relaxed mb-6">{location.description}</p>
+    <p class="text-lg text-gray-400 leading-relaxed">
+      Przed przyjazdem prosimy o krótki opis objawów i rodzaju budynku. Ułatwia to dobór sprzętu
+      i pozwala lepiej oszacować zakres prac na miejscu.
+    </p>
+  </div>
+</section>
+
+<!-- Zakres prac -->
+<section id="zakres-prac" class="py-20 lg:py-24 bg-gradient-to-b from-transparent via-violet-950/20 to-transparent">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl sm:text-4xl font-bold">Co robimy w {location.name}</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      {scope.map(item => (
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-violet-500/20 to-cyan-500/20 flex items-center justify-center mb-4">
+            <Icon name={item.icon} class="w-7 h-7 text-violet-400" />
+          </div>
+          <h3 class="text-xl font-semibold mb-3">{item.title}</h3>
+          <p class="text-gray-400 leading-relaxed">{item.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Obszar działania -->
+<section class="py-20 lg:py-24 bg-[#0a0a0f]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl sm:text-4xl font-bold">{location.name} – obszar działania</h2>
+    </div>
+    <div class="mb-12">
+      <h3 class="text-xl font-semibold text-gray-300 mb-4">Osiedla i części miejscowości:</h3>
+      <div class="flex flex-wrap gap-3">
+        {location.areas.map(a => (
+          <span class="px-4 py-2 bg-violet-500/10 text-violet-200 rounded-full font-medium border border-violet-500/20">{a}</span>
+        ))}
+      </div>
+    </div>
+    <div>
+      <h3 class="text-xl font-semibold text-gray-300 mb-4">Dojeżdżamy m.in. na ulice:</h3>
+      <p class="text-gray-400 leading-relaxed">
+        {location.streets.join(' • ')} i pozostałe ulice miejscowości {location.name}.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Opinie lokalne -->
+{location.testimonials.length > 0 && (
+  <section class="py-20 lg:py-24 bg-gradient-to-b from-transparent via-cyan-950/10 to-transparent">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl sm:text-4xl font-bold">Opinie z {location.name}</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        {location.testimonials.map(t => (
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+            <Icon name="quote" class="w-8 h-8 text-violet-500/40 mb-4" />
+            <p class="text-gray-200 leading-relaxed mb-4 italic">"{t.text}"</p>
+            <div class="flex items-center gap-2 text-sm text-gray-500">
+              <Icon name="map-pin" class="w-4 h-4" />
+              <span>{t.location}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<!-- Dlaczego my -->
+<section class="py-20 lg:py-24 bg-[#0a0a0f]">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-center">Dlaczego warto wybrać nas w {location.name}</h2>
+    <div class="space-y-4">
+      {whyPoints.map(p => (
+        <div class="flex items-start gap-3">
+          <Icon name="check-circle" class="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" />
+          <p class="text-lg text-gray-300">{p}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+{location.faq.length > 0 && (
+  <section class="py-20 lg:py-24 bg-[#0a0a0f]">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl sm:text-4xl font-bold">FAQ – Hydraulik {location.name}</h2>
+      </div>
+      <div class="space-y-4">
+        {location.faq.map(f => (
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+            <h3 class="text-lg font-bold mb-3">{f.question}</h3>
+            <p class="text-gray-400 leading-relaxed">{f.answer}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<!-- CTA -->
+<section class="py-16 lg:py-20 bg-gradient-to-br from-violet-600 to-cyan-600">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Potrzebujesz hydraulika w {location.name}?</h2>
+    <p class="text-xl text-white/90 mb-8">Zadzwoń – ustalimy termin i orientacyjny koszt.</p>
+    <a
+      href={`tel:${siteConfig.phoneTel}`}
+      class="inline-flex items-center gap-3 bg-white text-violet-700 px-10 py-5 rounded-full text-xl font-bold hover:shadow-2xl transition-all hover:scale-105"
+    >
+      <Icon name="phone" class="w-6 h-6" />
+      <span>{phoneLabel}</span>
+    </a>
+  </div>
+</section>
+
+<!-- Inne miejscowości -->
+<section class="py-16 lg:py-20 bg-[#0a0a0f]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl font-bold mb-8 text-center">Działamy też w innych miejscowościach</h2>
+    <div class="flex flex-wrap justify-center gap-3">
+      <a href="/" class="group flex items-center gap-2 bg-white/5 border border-white/10 px-5 py-3 rounded-full hover:border-violet-500/50 hover:bg-white/10 transition-all">
+        <Icon name="map-pin" class="w-4 h-4 text-violet-400" />
+        <span class="font-medium text-gray-300 group-hover:text-white">Hydraulik Zielonka</span>
+      </a>
+      {others.map(l => (
+        <a href={`/${l.slug}`} class="group flex items-center gap-2 bg-white/5 border border-white/10 px-5 py-3 rounded-full hover:border-violet-500/50 hover:bg-white/10 transition-all">
+          <Icon name="map-pin" class="w-4 h-4 text-violet-400" />
+          <span class="font-medium text-gray-300 group-hover:text-white">Hydraulik {l.name}</span>
+          <Icon name="arrow-right" class="w-4 h-4 text-gray-600 group-hover:text-violet-400 group-hover:translate-x-1 transition-all" />
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

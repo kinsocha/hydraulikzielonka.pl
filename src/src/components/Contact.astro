@@ -1,0 +1,192 @@
+---
+import Icon from './Icon.astro';
+import { siteConfig, phoneLabel } from '../config/site';
+
+const serviceOptions = [
+  'Udrażnianie kanalizacji',
+  'Naprawa instalacji',
+  'Wymiana armatury',
+  'Inspekcja kamerą',
+  'Pogotowie / awaria',
+  'Inne / nie wiem',
+];
+---
+
+<section id="kontakt" class="py-20 lg:py-28 bg-[#0a0a0f]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">
+        Skontaktuj się <span class="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">z nami</span>
+      </h2>
+      <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+        Masz problem z instalacją? Zadzwoń lub napisz – reagujemy szybko.
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16">
+      <!-- Formularz -->
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-6 lg:p-10">
+        <div id="form-success" class="hidden text-center py-12">
+          <div class="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Icon name="check-circle" class="w-10 h-10 text-green-400" />
+          </div>
+          <h3 class="text-2xl font-bold mb-4">Dziękujemy za wiadomość!</h3>
+          <p class="text-gray-400 mb-6">Skontaktujemy się z Tobą najszybciej, jak to możliwe.</p>
+          <button id="send-another" class="text-violet-400 font-semibold hover:text-violet-300 transition-colors">
+            Wyślij kolejną wiadomość
+          </button>
+        </div>
+
+        <form id="contact-form" class="space-y-6">
+          {[
+            { id: 'name',  label: 'Imię i nazwisko *',   type: 'text',  placeholder: 'Jan Kowalski' },
+            { id: 'phone', label: 'Telefon *',            type: 'tel',   placeholder: '500 600 700' },
+            { id: 'email', label: 'E-mail (opcjonalnie)', type: 'email', placeholder: 'jan@example.pl' },
+          ].map(f => (
+            <div>
+              <label for={f.id} class="block text-sm font-medium text-gray-300 mb-2">{f.label}</label>
+              <input
+                type={f.type}
+                id={f.id}
+                name={f.id}
+                placeholder={f.placeholder}
+                class="form-field w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-gray-500 transition-colors focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500"
+              />
+              <p id={`${f.id}-error`} class="form-error hidden mt-1 text-sm text-red-400 flex items-center gap-1">
+                <Icon name="alert-circle" class="w-4 h-4" />
+                <span></span>
+              </p>
+            </div>
+          ))}
+
+          <div>
+            <label for="service" class="block text-sm font-medium text-gray-300 mb-2">Rodzaj sprawy *</label>
+            <select
+              id="service"
+              name="service"
+              class="form-field w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500"
+            >
+              <option value="" class="bg-[#1a1a2e]">Wybierz...</option>
+              {serviceOptions.map(o => <option value={o} class="bg-[#1a1a2e]">{o}</option>)}
+            </select>
+            <p id="service-error" class="form-error hidden mt-1 text-sm text-red-400 flex items-center gap-1">
+              <Icon name="alert-circle" class="w-4 h-4" />
+              <span></span>
+            </p>
+          </div>
+
+          <div>
+            <label for="message" class="block text-sm font-medium text-gray-300 mb-2">Krótki opis problemu *</label>
+            <textarea
+              id="message"
+              name="message"
+              rows={4}
+              placeholder="Np. zatkany zlew kuchenny, mieszkanie w bloku, Zielonka Centrum..."
+              class="form-field w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-gray-500 transition-colors focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 resize-none"
+            ></textarea>
+            <p id="message-error" class="form-error hidden mt-1 text-sm text-red-400 flex items-center gap-1">
+              <Icon name="alert-circle" class="w-4 h-4" />
+              <span></span>
+            </p>
+          </div>
+
+          <button
+            type="submit"
+            id="submit-btn"
+            class="w-full bg-gradient-to-r from-violet-600 to-cyan-600 text-white py-3.5 rounded-2xl font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+          >
+            <Icon name="send" class="w-5 h-5" />
+            <span>Wyślij wiadomość</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Info -->
+      <div class="space-y-6">
+        <div class="bg-gradient-to-br from-violet-600 to-cyan-600 rounded-2xl p-8">
+          <h3 class="text-2xl font-bold mb-3">Najszybciej – telefon</h3>
+          <p class="mb-6 text-white/90">Krótki opis problemu i adres – w 2 minuty wiemy, co przygotować.</p>
+          <a
+            href={`tel:${siteConfig.phoneTel}`}
+            class="inline-flex items-center gap-3 bg-white text-violet-700 px-6 py-3 rounded-full font-bold hover:shadow-xl transition-all hover:scale-105"
+          >
+            <Icon name="phone" class="w-5 h-5" />
+            <span>{phoneLabel}</span>
+          </a>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-6 text-center">
+            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center mx-auto mb-4">
+              <Icon name="clock" class="w-7 h-7 text-white" />
+            </div>
+            <div class="font-semibold mb-1">Godziny pracy</div>
+            <p class="text-gray-400 text-sm">Pon–Pt 7:00–20:00</p>
+            <p class="text-gray-400 text-sm">Sob 8:00–16:00</p>
+            <p class="text-violet-400 text-sm mt-1">Awarie 24/7</p>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-6 text-center">
+            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center mx-auto mb-4">
+              <Icon name="map-pin" class="w-7 h-7 text-white" />
+            </div>
+            <div class="font-semibold mb-1">Obszar</div>
+            <p class="text-gray-400 text-sm">Zielonka</p>
+            <p class="text-violet-400 text-sm">i okolice</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form        = document.getElementById('contact-form') as HTMLFormElement;
+  const success     = document.getElementById('form-success') as HTMLElement;
+  const submitBtn   = document.getElementById('submit-btn') as HTMLButtonElement;
+  const sendAnother = document.getElementById('send-another') as HTMLButtonElement;
+
+  function showError(field: string, msg: string) {
+    const el  = document.getElementById(`${field}-error`) as HTMLElement;
+    const inp = document.getElementById(field) as HTMLElement;
+    if (el) { el.classList.remove('hidden'); el.querySelector('span')!.textContent = msg; }
+    inp?.classList.add('border-red-400');
+  }
+
+  function clearErrors() {
+    document.querySelectorAll<HTMLElement>('.form-error').forEach(e => e.classList.add('hidden'));
+    document.querySelectorAll<HTMLElement>('.form-field').forEach(f => f.classList.remove('border-red-400'));
+  }
+
+  form?.addEventListener('submit', async e => {
+    e.preventDefault();
+    clearErrors();
+
+    const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
+    let valid = true;
+
+    if (!data.name?.trim())  { showError('name', 'Imię i nazwisko jest wymagane'); valid = false; }
+    if (!data.phone?.trim()) { showError('phone', 'Numer telefonu jest wymagany'); valid = false; }
+    else if (!/^[0-9\s+()-]{9,}$/.test(data.phone)) { showError('phone', 'Podaj prawidłowy numer telefonu'); valid = false; }
+    if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { showError('email', 'Podaj prawidłowy adres e-mail'); valid = false; }
+    if (!data.service)        { showError('service', 'Wybierz rodzaj sprawy'); valid = false; }
+    if (!data.message?.trim()){ showError('message', 'Opisz swój problem'); valid = false; }
+
+    if (!valid) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Wysyłanie...';
+
+    await new Promise(r => setTimeout(r, 1200));
+
+    form.classList.add('hidden');
+    success.classList.remove('hidden');
+  });
+
+  sendAnother?.addEventListener('click', () => {
+    form.reset();
+    form.classList.remove('hidden');
+    success.classList.add('hidden');
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m22 2-7 20-4-9-9-4 20-7z"/><path d="M22 2 11 13"/></svg><span>Wyślij wiadomość</span>';
+  });
+</script>

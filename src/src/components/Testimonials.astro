@@ -1,0 +1,99 @@
+---
+import Icon from './Icon.astro';
+
+const testimonials = [
+  { content: 'Bardzo szybka interwencja i profesjonalne podejście. Zator w kuchni usunięty w 30 minut, a przyjechali w ciągu godziny od zgłoszenia. Polecam bez wahania.', location: 'Zielonka' },
+  { content: 'Pan zjawił się o umówionej godzinie i miał profesjonalny sprzęt. Kilka minut i kanalizacja znów działa, a wcześniej problem ciągnął się tygodniami.', location: 'Ząbki' },
+  { content: 'Awaria w weekend, woda spod pralki. Odebrał telefon, przyjechał, naprawił. Uratował mi mieszkanie.', location: 'Marki' },
+  { content: 'Profesjonalizm, punktualność i uczciwe podejście. Cena zgodna z ustaleniami. Udrażnianie pionu wykonane wzorowo.', location: 'Kobyłka' },
+  { content: 'Pan był przygotowany, cierpliwy i dokładny. Wytłumaczył, gdzie leżał problem, i jak uniknąć go w przyszłości.', location: 'Wołomin' },
+];
+---
+
+<section id="opinie" class="py-20 lg:py-28 bg-[#0a0a0f]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">
+        Co mówią <span class="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">klienci</span>
+      </h2>
+      <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+        Opinie z Zielonki i okolic – mieszkania, domy, lokale usługowe.
+      </p>
+    </div>
+
+    <div class="max-w-4xl mx-auto relative">
+      <div class="bg-white/5 border border-white/10 rounded-3xl p-8 lg:p-12 relative">
+        <Icon name="quote" class="w-16 h-16 text-violet-500/30 mb-6" />
+
+        {testimonials.map((t, i) => (
+          <div class="testimonial-item" class:list={[i !== 0 && 'hidden']}>
+            <div class="flex items-center gap-1 mb-6">
+              {Array.from({ length: 5 }).map(() => (
+                <Icon name="star" class="w-5 h-5 fill-amber-400 text-amber-400" />
+              ))}
+            </div>
+            <p class="text-xl lg:text-2xl text-gray-100 leading-relaxed mb-8 font-medium">"{t.content}"</p>
+            <div class="flex items-center justify-between flex-wrap gap-4">
+              <div class="flex items-center gap-2 text-gray-400">
+                <Icon name="map-pin" class="w-4 h-4 text-violet-400" />
+                <span>{t.location}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button id="prev-btn" aria-label="Poprzednia opinia" class="p-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors">
+                  <Icon name="chevron-left" class="w-5 h-5 text-white" />
+                </button>
+                <button id="next-btn" aria-label="Następna opinia" class="p-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors">
+                  <Icon name="chevron-right" class="w-5 h-5 text-white" />
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="flex items-center justify-center gap-2 mt-6">
+        {testimonials.map((_, i) => (
+          <button
+            class:list={['testimonial-dot transition-all rounded-full h-2', i === 0 ? 'w-8 bg-violet-500' : 'w-2 bg-white/20 hover:bg-white/40']}
+            data-index={i}
+            aria-label={`Przejdź do opinii ${i + 1}`}
+          ></button>
+        ))}
+      </div>
+
+      <div class="text-center mt-10">
+        <a href="/opinie" class="inline-flex items-center gap-2 text-violet-400 hover:text-violet-300 font-semibold transition-colors">
+          Zobacz wszystkie opinie
+          <Icon name="arrow-right" class="w-4 h-4" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const items = document.querySelectorAll<HTMLElement>('.testimonial-item');
+  const dots  = document.querySelectorAll<HTMLElement>('.testimonial-dot');
+  let current = 0;
+  let timer: ReturnType<typeof setInterval>;
+
+  function show(idx: number) {
+    items[current]?.classList.add('hidden');
+    dots[current]?.classList.replace('w-8', 'w-2');
+    dots[current]?.classList.replace('bg-violet-500', 'bg-white/20');
+
+    current = (idx + items.length) % items.length;
+
+    items[current]?.classList.remove('hidden');
+    dots[current]?.classList.replace('w-2', 'w-8');
+    dots[current]?.classList.replace('bg-white/20', 'bg-violet-500');
+  }
+
+  function startAuto() { timer = setInterval(() => show(current + 1), 6000); }
+
+  document.getElementById('prev-btn')?.addEventListener('click', () => { clearInterval(timer); show(current - 1); });
+  document.getElementById('next-btn')?.addEventListener('click', () => { clearInterval(timer); show(current + 1); });
+  dots.forEach((d, i) => d.addEventListener('click', () => { clearInterval(timer); show(i); }));
+
+  startAuto();
+</script>

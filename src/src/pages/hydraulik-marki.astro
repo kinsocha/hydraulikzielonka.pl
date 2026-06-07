@@ -1,0 +1,10 @@
+---
+import Default from '../layouts/Default.astro';
+import LocationContent from '../components/LocationContent.astro';
+import { locations } from '../data/locations';
+
+const location = locations.find(l => l.slug === 'hydraulik-marki')!;
+---
+<Default title={location.metaTitle} description={location.metaDescription}>
+  <LocationContent location={location} />
+</Default>

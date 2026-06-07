@@ -1,0 +1,57 @@
+---
+import Icon from './Icon.astro';
+import { siteConfig, phoneLabel } from '../config/site';
+---
+
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0a0f]">
+  <!-- Tło: poświaty i siatka -->
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute top-1/4 -left-32 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl animate-pulse"></div>
+    <div class="absolute bottom-1/4 -right-32 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse" style="animation-delay:1s"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(139,92,246,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.04)_1px,transparent_1px)] bg-[size:64px_64px]"></div>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-40">
+    <div class="text-center max-w-4xl mx-auto">
+      <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 mb-8 animate-fade-in">
+        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+        <span class="text-base text-gray-400">Dostępny 24/7 w Zielonce i okolicach</span>
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold mb-6 leading-tight">
+        <span class="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">
+          Hydraulik
+        </span>
+        <span class="block text-white">Zielonka</span>
+      </h1>
+
+      <p class="text-lg sm:text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+        Profesjonalne usługi hydrauliczne w Zielonce i okolicach. Udrażnianie kanalizacji,
+        naprawa instalacji, montaż armatury. Przyjeżdżamy szybko i wyceniamy przed pracą.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href={`tel:${siteConfig.phoneTel}`}
+          class="group flex items-center gap-2 bg-gradient-to-r from-violet-600 to-cyan-600 px-8 py-4 rounded-2xl font-semibold text-lg hover:opacity-90 transition-opacity w-full sm:w-auto justify-center"
+        >
+          <Icon name="phone" class="w-5 h-5" />
+          <span>{phoneLabel}</span>
+          <Icon name="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+        </a>
+        <a
+          href="#uslugi"
+          class="flex items-center gap-2 bg-white/5 border border-white/10 px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-white/10 transition-colors w-full sm:w-auto justify-center"
+        >
+          Zobacz usługi
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+    <div class="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center">
+      <div class="w-1.5 h-3 bg-white/40 rounded-full mt-2 animate-scroll"></div>
+    </div>
+  </div>
+</section>

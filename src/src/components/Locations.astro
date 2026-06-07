@@ -1,0 +1,57 @@
+---
+import Icon from './Icon.astro';
+import { siteConfig, phoneLabel } from '../config/site';
+import { locations } from '../data/locations';
+
+const withPages = locations.map(l => l.name);
+const withoutPages = siteConfig.allAreas.filter(a => a !== siteConfig.city && !withPages.includes(a));
+---
+
+<section class="py-20 lg:py-28 bg-gradient-to-b from-transparent via-violet-950/20 to-transparent">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">
+        Zielonka <span class="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">i okolice</span>
+      </h2>
+      <p class="text-gray-400 text-lg max-w-3xl mx-auto">
+        Działamy w Zielonce oraz sąsiednich miejscowościach powiatu wołomińskiego.
+        Najlepiej zadzwonić i podać dokładny adres.
+      </p>
+    </div>
+
+    <div class="mb-12">
+      <h3 class="text-xl font-semibold mb-6 text-center">Miejscowości z osobnymi stronami</h3>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {locations.map(l => (
+          <a href={`/${l.slug}`} class="group bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/10 hover:border-violet-500/50 transition-all">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="p-2 bg-violet-500/20 rounded-lg group-hover:bg-violet-500/30 transition-colors">
+                  <Icon name="map-pin" class="w-5 h-5 text-violet-400" />
+                </div>
+                <div class="font-semibold text-white group-hover:text-cyan-300 transition-colors">Hydraulik {l.name}</div>
+              </div>
+              <Icon name="arrow-right" class="w-4 h-4 text-gray-600 group-hover:text-violet-400 group-hover:translate-x-1 transition-all" />
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div class="mb-12">
+      <h3 class="text-xl font-semibold mb-6 text-center">Dojeżdżamy także do</h3>
+      <div class="flex flex-wrap justify-center gap-2">
+        {withoutPages.map(a => (
+          <span class="px-4 py-2 bg-white/5 text-gray-300 rounded-full border border-white/10 text-base">{a}</span>
+        ))}
+      </div>
+    </div>
+
+    <div class="text-center">
+      <a href={`tel:${siteConfig.phoneTel}`} class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-6 py-4 hover:bg-white/10 transition-colors">
+        <Icon name="phone" class="w-5 h-5 text-violet-400" />
+        <span class="font-semibold">{phoneLabel}</span>
+      </a>
+    </div>
+  </div>
+</section>

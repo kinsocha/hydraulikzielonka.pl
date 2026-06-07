@@ -1,0 +1,116 @@
+---
+import Icon from './Icon.astro';
+
+const faqs = [
+  {
+    question: 'Ile kosztuje udrażnianie kanalizacji w Zielonce?',
+    answer: 'Cena zależy od rodzaju instalacji, dostępu do rur i skali problemu. Udrażnianie zlewu zaczyna się od ok. 150 zł, udrażnianie WC od ok. 200 zł, czyszczenie pionu od ok. 300 zł. Dokładną wycenę podajemy przez telefon, przed przyjazdem.',
+  },
+  {
+    question: 'Jak szybko możecie przyjechać?',
+    answer: 'Najczęściej tego samego dnia, zwykle w ciągu 1–2 godzin. W nagłych awariach – zalanie, cofająca się kanalizacja, pęknięta rura – reagujemy priorytetowo, również wieczorem i w weekend.',
+  },
+  {
+    question: 'Czy zatkany zlew można udrożnić samemu?',
+    answer: 'Czasem tak. Bezpiecznym krokiem jest zdjęcie i wyczyszczenie syfonu oraz przelanie odpływu gorącą wodą. Pomaga też zwykła przepychaczka. Domowe sposoby z sodą i octem zwykle nie rozbijają prawdziwego zatoru – wtedy lepiej zadzwonić.',
+  },
+  {
+    question: 'Jakie metody udrażniania stosujecie?',
+    answer: 'Dwie główne. Sprężyna elektryczna rozbija punktowe zatory – włosy, resztki jedzenia, papier. Płukanie ciśnieniowe (WUKO) usuwa tłuszcz, osady i kamień na dłuższych odcinkach. Metodę dobieramy po obejrzeniu instalacji.',
+  },
+  {
+    question: 'Naprawiacie też zwykłe usterki hydrauliczne?',
+    answer: 'Tak. Cieknący kran, przeciekający syfon, wymiana zaworu, montaż baterii, umywalki czy toalety, podłączenie pralki i zmywarki – wykonujemy pełen zakres prac hydraulicznych, nie tylko udrażnianie.',
+  },
+  {
+    question: 'Czy wystawiacie fakturę VAT?',
+    answer: 'Tak, dla klientów indywidualnych, firm i wspólnot mieszkaniowych. Możliwe są też cykliczne przeglądy i konserwacja instalacji, na przykład w wynajmowanych mieszkaniach.',
+  },
+  {
+    question: 'Co jeśli zator wraca?',
+    answer: 'Powracający zator to sygnał głębszego problemu – osadów na długim odcinku, uszkodzenia rury albo wrastających korzeni. Wtedy warto zrobić inspekcję kamerą, żeby zobaczyć przyczynę, a nie tylko usunąć skutek.',
+  },
+];
+
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: { '@type': 'Answer', text: f.answer },
+  })),
+});
+---
+
+<script type="application/ld+json" set:html={faqSchema} is:inline />
+
+<section class="py-20 lg:py-28 bg-[#0a0a0f]">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">
+        Najczęstsze <span class="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">pytania</span>
+      </h2>
+      <p class="text-gray-400 text-lg">Krótko i konkretnie. Jeśli nie znajdziesz odpowiedzi – po prostu zadzwoń.</p>
+    </div>
+
+    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 lg:p-8">
+      {faqs.map((faq, i) => (
+        <div class="faq-item border-b border-white/10 last:border-b-0">
+          <button class="faq-btn w-full flex items-center justify-between py-5 text-left hover:text-violet-300 transition-colors" data-index={i}>
+            <span class="text-lg font-semibold pr-4">{faq.question}</span>
+            <span class="faq-icon flex-shrink-0 p-2 rounded-full bg-white/10 text-gray-300 transition-colors">
+              <Icon name="plus" class="w-5 h-5 icon-open" />
+              <Icon name="minus" class="w-5 h-5 icon-close hidden" />
+            </span>
+          </button>
+          <div class:list={['faq-content overflow-hidden transition-all duration-300', i === 0 ? 'max-h-96 pb-5' : 'max-h-0']}>
+            <p class="text-gray-400 leading-relaxed">{faq.answer}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const items = document.querySelectorAll<HTMLElement>('.faq-item');
+
+  const firstIcon = items[0]?.querySelector<HTMLElement>('.faq-icon');
+  if (firstIcon) {
+    firstIcon.classList.replace('bg-white/10', 'bg-violet-500/30');
+    firstIcon.classList.replace('text-gray-300', 'text-violet-300');
+    firstIcon.querySelector('.icon-open')?.classList.add('hidden');
+    firstIcon.querySelector('.icon-close')?.classList.remove('hidden');
+  }
+
+  items.forEach(item => {
+    const btn     = item.querySelector<HTMLElement>('.faq-btn')!;
+    const content = item.querySelector<HTMLElement>('.faq-content')!;
+    const icon    = item.querySelector<HTMLElement>('.faq-icon')!;
+
+    btn.addEventListener('click', () => {
+      const isOpen = !content.classList.contains('max-h-0');
+
+      items.forEach(it => {
+        const c  = it.querySelector<HTMLElement>('.faq-content')!;
+        const ic = it.querySelector<HTMLElement>('.faq-icon')!;
+        c.classList.add('max-h-0');
+        c.classList.remove('max-h-96', 'pb-5');
+        ic.classList.replace('bg-violet-500/30', 'bg-white/10');
+        ic.classList.replace('text-violet-300', 'text-gray-300');
+        ic.querySelector('.icon-open')?.classList.remove('hidden');
+        ic.querySelector('.icon-close')?.classList.add('hidden');
+      });
+
+      if (!isOpen) {
+        content.classList.remove('max-h-0');
+        content.classList.add('max-h-96', 'pb-5');
+        icon.classList.replace('bg-white/10', 'bg-violet-500/30');
+        icon.classList.replace('text-gray-300', 'text-violet-300');
+        icon.querySelector('.icon-open')?.classList.add('hidden');
+        icon.querySelector('.icon-close')?.classList.remove('hidden');
+      }
+    });
+  });
+</script>

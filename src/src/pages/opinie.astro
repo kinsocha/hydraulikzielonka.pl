@@ -1,0 +1,105 @@
+---
+import Default from '../layouts/Default.astro';
+import Icon from '../components/Icon.astro';
+import { siteConfig, phoneLabel } from '../config/site';
+import { getCollection } from 'astro:content';
+
+const reviewEntries = await getCollection('reviews');
+const reviews = reviewEntries.map(e => e.data);
+
+const avg = reviews.length ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : 5;
+
+// Gwiazdki w Google: CreativeWorkSeries + aggregateRating (nie LocalBusiness)
+const ratingSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWorkSeries',
+  name: `Opinie klientów – ${siteConfig.name}`,
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: avg.toFixed(1),
+    reviewCount: reviews.length,
+    bestRating: '5',
+    worstRating: '1',
+  },
+});
+---
+
+<Default
+  title="Opinie klientów – Hydraulik Zielonka"
+  description="Opinie klientów o usługach Hydraulik Zielonka: udrażnianie kanalizacji, naprawa instalacji, montaż armatury, pogotowie. Zielonka i okolice."
+>
+  <script type="application/ld+json" set:html={ratingSchema} is:inline />
+
+  <!-- Hero -->
+  <section class="relative pt-32 pb-16 lg:pt-40 lg:pb-20 bg-[#0a0a0f] overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="absolute top-1/4 -left-32 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl animate-pulse"></div>
+      <div class="absolute bottom-1/4 -right-32 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse" style="animation-delay:1s"></div>
+    </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center gap-2 text-gray-500 text-sm mb-6">
+        <a href="/" class="hover:text-violet-300 transition-colors flex items-center gap-1">
+          <Icon name="arrow-left" class="w-4 h-4" /> Strona główna
+        </a>
+        <span>/</span>
+        <span class="text-gray-300">Opinie</span>
+      </div>
+      <div class="text-center max-w-3xl mx-auto">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">Opinie klientów</h1>
+        <div class="flex items-center justify-center gap-2 mb-6">
+          {Array.from({ length: 5 }).map(() => (
+            <Icon name="star" class="w-7 h-7 fill-amber-400 text-amber-400" />
+          ))}
+          <span class="text-2xl font-bold ml-2">{avg.toFixed(1)}/5</span>
+        </div>
+        <p class="text-lg sm:text-xl text-gray-400 leading-relaxed">
+          Oceny i komentarze osób, którym pomagaliśmy przy instalacjach i udrażnianiu
+          w Zielonce oraz okolicach.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Siatka opinii -->
+  <section class="py-16 lg:py-20 bg-[#0a0a0f]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {reviews.map(r => (
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+            <Icon name="quote" class="w-8 h-8 text-violet-500/40 mb-4" />
+            <div class="flex items-center gap-1 mb-4">
+              {Array.from({ length: r.rating }).map(() => (
+                <Icon name="star" class="w-5 h-5 fill-amber-400 text-amber-400" />
+              ))}
+            </div>
+            <p class="text-gray-200 leading-relaxed mb-4 italic">"{r.text}"</p>
+            <div class="space-y-1 text-sm text-gray-500 border-t border-white/10 pt-3">
+              {r.location && (
+                <div class="flex items-center gap-2">
+                  <Icon name="map-pin" class="w-4 h-4" />
+                  <span>{r.location}</span>
+                </div>
+              )}
+              {r.service && <div class="text-violet-400 font-medium">{r.service}</div>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 lg:py-20 bg-gradient-to-br from-violet-600 to-cyan-600">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4">Dołącz do zadowolonych klientów</h2>
+      <p class="text-xl text-white/90 mb-8">Zadzwoń – ustalimy termin i orientacyjny koszt usługi.</p>
+      <a
+        href={`tel:${siteConfig.phoneTel}`}
+        class="inline-flex items-center gap-3 bg-white text-violet-700 px-10 py-5 rounded-full text-xl font-bold hover:shadow-2xl transition-all hover:scale-105"
+      >
+        <Icon name="phone" class="w-6 h-6" />
+        <span>{phoneLabel}</span>
+      </a>
+    </div>
+  </section>
+</Default>

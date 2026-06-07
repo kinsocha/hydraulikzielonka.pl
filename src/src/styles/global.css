@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-size: 1rem;
+}
+
+/* Animacje */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scroll {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50%      { transform: translateY(8px); opacity: 0.5; }
+}
+
+.animate-fade-in { animation: fade-in 0.8s ease-out forwards; }
+.animate-scroll  { animation: scroll 1.5s ease-in-out infinite; }
+
+/* Pasek przewijania */
+::-webkit-scrollbar       { width: 8px; }
+::-webkit-scrollbar-track { background: #0a0a0f; }
+::-webkit-scrollbar-thumb { background: #2d2d44; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #3f3f5f; }

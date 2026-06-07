@@ -1,0 +1,105 @@
+---
+import Icon from './Icon.astro';
+import { siteConfig } from '../config/site';
+import { locations } from '../data/locations';
+
+const year = new Date().getFullYear();
+
+const services = [
+  'Udrażnianie kanalizacji',
+  'Naprawa instalacji',
+  'Wymiana armatury',
+  'Inspekcja kamerą',
+  'Przeglądy okresowe',
+];
+---
+
+<footer class="bg-[#070709] border-t border-white/10 text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+
+      <!-- Marka -->
+      <div class="lg:col-span-1">
+        <a href="/" class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center">
+            <Icon name="wrench" class="w-5 h-5 text-white" />
+          </div>
+          <span class="text-xl font-bold">{siteConfig.name}</span>
+        </a>
+        <p class="text-gray-400 mb-6 leading-relaxed">
+          Profesjonalne usługi hydrauliczne i udrażnianie kanalizacji w Zielonce i okolicach.
+          Szybki dojazd, wycena przed pracą.
+        </p>
+        {(siteConfig.social.facebook || siteConfig.social.instagram) && (
+          <div class="flex items-center gap-4">
+            {siteConfig.social.facebook && (
+              <a href={siteConfig.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="p-2 bg-white/5 rounded-lg hover:bg-violet-500 transition-colors">
+                <Icon name="facebook" class="w-5 h-5" />
+              </a>
+            )}
+            {siteConfig.social.instagram && (
+              <a href={siteConfig.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="p-2 bg-white/5 rounded-lg hover:bg-violet-500 transition-colors">
+                <Icon name="instagram" class="w-5 h-5" />
+              </a>
+            )}
+          </div>
+        )}
+      </div>
+
+      <!-- Usługi -->
+      <div>
+        <h3 class="text-lg font-bold mb-6">Usługi</h3>
+        <ul class="space-y-3">
+          {services.map(s => (
+            <li><a href="/#uslugi" class="text-gray-400 hover:text-cyan-300 transition-colors">{s}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Okolice -->
+      <div>
+        <h3 class="text-lg font-bold mb-6">Okolice</h3>
+        <ul class="space-y-3">
+          {locations.map(l => (
+            <li><a href={`/${l.slug}`} class="text-gray-400 hover:text-cyan-300 transition-colors">Hydraulik {l.name}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Kontakt -->
+      <div>
+        <h3 class="text-lg font-bold mb-6">Kontakt</h3>
+        <ul class="space-y-4 text-gray-400">
+          <li class="flex items-center gap-3">
+            <Icon name="map-pin" class="w-5 h-5 text-violet-400 flex-shrink-0" />
+            <span>Zielonka i okolice</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <Icon name="clock" class="w-5 h-5 text-violet-400 flex-shrink-0" />
+            <span>Awarie 24/7</span>
+          </li>
+          {siteConfig.email && (
+            <li>
+              <a href={`mailto:${siteConfig.email}`} class="flex items-center gap-3 hover:text-cyan-300 transition-colors">
+                <Icon name="mail" class="w-5 h-5 text-violet-400 flex-shrink-0" />
+                <span class="break-all">{siteConfig.email}</span>
+              </a>
+            </li>
+          )}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-gray-500 text-sm text-center md:text-left">
+        © {year} {siteConfig.name}. Wszystkie prawa zastrzeżone.
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6">
+        <a href="/opinie" class="text-gray-500 text-sm hover:text-cyan-300 transition-colors">Opinie</a>
+        <a href="/#kontakt" class="text-gray-500 text-sm hover:text-cyan-300 transition-colors">Kontakt</a>
+      </div>
+    </div>
+  </div>
+</footer>
