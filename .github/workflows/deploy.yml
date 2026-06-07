@@ -1,34 +1,46 @@
-name: Deploy to Seohost
+name: Deploy hydraulikzielonka.pl
 
 on:
   push:
-    branches:
-      - main
+    branches: ["main"]
+  workflow_dispatch:
+
+concurrency:
+  group: "deploy-hydraulikzielonka"
+  cancel-in-progress: false
 
 jobs:
-  deploy:
+  build-and-deploy:
+    name: Build & Deploy
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: "20"
+          cache: "npm"
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build
+      - name: Build (Astro)
         run: npm run build
 
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Sync files via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           password: ${{ secrets.REMOTE_PASSWORD }}
           local-dir: ./dist/
           server-dir: ./public_html/
-          timeout: 60000
+          timeout: 30000
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/src/**
+            **/node_modules/**
