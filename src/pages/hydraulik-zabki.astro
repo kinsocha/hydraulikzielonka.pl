@@ -1,0 +1,271 @@
+---
+import '../styles/sections.css';
+
+const phone = '';                 // <- WPISZ numer, np. '500 600 700'
+const phoneLabel = phone || 'Zadzwoń teraz';
+const phoneHref = phone ? `tel:+48${phone.replace(/\s/g, '')}` : '#';
+---
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+  <title>Hydraulik Ząbki - usługi hydrauliczne i udrażnianie | Hydraulik Zielonka</title>
+  <meta name="description" content="Hydraulik Ząbki - udrażnianie kanalizacji, naprawa instalacji, montaż armatury, pogotowie. Szybki dojazd, wycena przed pracą." />
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Hydraulik Zielonka - Ząbki",
+  "url": "https://hydraulik-zielonka.pl/hydraulik-zabki",
+  "telephone": "",
+  "areaServed": {
+    "@type": "City",
+    "name": "Ząbki"
+  },
+  "priceRange": "$$"
+}
+  </script>
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Ile kosztuje hydraulik w Ząbkach?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Koszt zależy od rodzaju usługi i dostępu do instalacji. Drobne naprawy zaczynają się od kilkudziesięciu złotych, udrażnianie zlewu lub WC od ok. 150 zł. Cenę podajemy przez telefon, przed przyjazdem."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Jak szybko dojedziecie do Ząbek?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ząbki sąsiadują z Zielonką, więc dojazd jest krótki. Najczęściej jesteśmy na miejscu tego samego dnia, a w pilnych awariach reagujemy priorytetowo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Czy zajmujecie się awariami po godzinach?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tak. W nagłych przypadkach, gdy leje się woda lub cofa kanalizacja, jesteśmy dostępni również wieczorami i w weekendy."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Naprawiacie też instalacje w blokach?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tak. Pracujemy w blokach, kamienicach i domach jednorodzinnych. W częściach wspólnych współpracujemy z administracją i wystawiamy fakturę VAT."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Co zrobić, zanim przyjedziecie do zatkanego odpływu?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Najlepiej nie wlewać kolejnych porcji środków chemicznych. Potrafią utrudnić pracę i uszkodzić rury. Wystarczy zakręcić dopływ wody do danego przyboru."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+
+<body data-bg="premium">
+  <div class="page-shell">
+
+    <header class="topbar">
+      <div class="container nav">
+        <a href="/" class="logo" aria-label="Hydraulik Zielonka strona główna">
+          <span class="logo__mark">🔧</span>
+          <span class="logo__name">Hydraulik Zielonka</span>
+        </a>
+        <nav class="nav__links" aria-label="Główna nawigacja">
+          <a href="/#uslugi">Usługi</a>
+          <a href="/#proces">Jak działamy</a>
+          <a href="/#cennik">Cennik</a>
+          <a href="/#faq">FAQ</a>
+          <a href="/#kontakt">Kontakt</a>
+        </nav>
+        <div class="nav__actions">
+          <a class="phone-link" href={phoneHref}><span>☎</span> {phoneLabel}</a>
+          <a class="btn-new btn-new--primary" href={phoneHref}>Zadzwoń teraz</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- INTRO -->
+      <section class="new-section">
+        <div class="container">
+          <div class="section-head reveal">
+            <div>
+              <p class="section-kicker"><a href="/" style="color:inherit">Strona główna</a> / Hydraulik Ząbki</p>
+              <h2 class="section-title">Hydraulik Ząbki - udrażnianie i naprawy</h2>
+            </div>
+            <p class="section-desc">Dojeżdżamy do Ząbki przy awariach, zatkanych odpływach i pracach instalacyjnych. Wycena przed przyjazdem, faktura VAT.</p>
+          </div>
+          <div class="hero-buttons" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
+            <a class="btn-new btn-new--primary" href={phoneHref}>📞 {phoneLabel}</a>
+            <a class="btn-new btn-new--ghost" href="#zakres">Zobacz zakres usług</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ZAKRES -->
+      <section id="zakres" class="new-section">
+        <div class="container">
+          <div class="section-head reveal">
+            <div>
+              <p class="section-kicker">Co robimy w Ząbki</p>
+              <h2 class="section-title">Zakres usług</h2>
+            </div>
+            <p class="section-desc">Dobieramy metodę do problemu i instalacji. Mieszkania, domy jednorodzinne, bloki i lokale usługowe.</p>
+          </div>
+          <div class="service-grid">
+            <article class="service-card-new reveal">
+              <div class="service-card-new__icon">💧</div>
+              <h3>Udrażnianie kanalizacji</h3>
+              <p>Mechaniczne i ciśnieniowe usuwanie zatorów w zlewach, toaletach, pionach i odpływach.</p>
+              <a class="service-card-new__more" href={phoneHref}>Zadzwoń →</a>
+            </article>
+            <article class="service-card-new reveal">
+              <div class="service-card-new__icon">🔧</div>
+              <h3>Naprawa instalacji</h3>
+              <p>Wymiana zaworów, naprawa przecieków, regeneracja uszczelek, podłączenia AGD.</p>
+              <a class="service-card-new__more" href={phoneHref}>Zadzwoń →</a>
+            </article>
+            <article class="service-card-new reveal">
+              <div class="service-card-new__icon">📹</div>
+              <h3>Inspekcja kamerą</h3>
+              <p>Diagnostyka wnętrza rur kamerą. Lokalizacja uszkodzeń, załamań i wrastających korzeni.</p>
+              <a class="service-card-new__more" href={phoneHref}>Zadzwoń →</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- OBSZAR -->
+      <section class="new-section">
+        <div class="container bento">
+          <article class="panel diagnostic reveal">
+            <p class="section-kicker">Opis</p>
+            <h2>Hydraulik i udrażnianie w Ząbki</h2>
+            <p>Ząbki to gęsta zabudowa tuż przy granicy z Warszawą. Sporo nowych bloków i kamienic, w których piony bywają mocno obciążone. Najczęściej jeździmy do zatkanych zlewów, prysznicy i toalet, ale równie często do drobnych awarii: cieknący zawór, przeciekający syfon, niesprawne podejście pod pralkę. Dobieramy metodę do problemu. Sprężyna elektryczna na punktowe zatory, ciśnieniowe płukanie na osady. Przy nawracających zatorach proponujemy inspekcję kamerą.</p>
+          </article>
+          <aside class="panel process-panel reveal">
+            <h2>Obszar działania</h2>
+            <p style="color:var(--muted);margin:0 0 6px">Osiedla i części miejscowości:</p>
+            <ul class="check-list">
+              <li>Centrum</li>
+              <li>Drewnica</li>
+              <li>osiedle przy Łodygowej</li>
+              <li>okolice Szpitalnej</li>
+            </ul>
+            <p style="color:var(--muted);margin:14px 0 0;line-height:1.6"><strong style="color:var(--ink)">Dojeżdżamy m.in. na ulice:</strong> Piłsudskiego • Wojska Polskiego • 11 Listopada • Szwoleżerów • Batorego • Powstańców • Kościelna • Orla • Łodygowa • Andersena • Skorupki • Szpitalna • Maczka • Drewnicka i pozostałe ulice miejscowości Ząbki.</p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="faq-section">
+        <div class="container faq-grid">
+          <div class="reveal">
+            <p class="section-kicker">Pytania klientów</p>
+            <h2 class="section-title">FAQ - Hydraulik Ząbki</h2>
+            <p class="section-desc">Najczęstsze pytania przed telefonem.</p>
+          </div>
+          <div class="faq-list reveal">
+            <article class="faq-item is-open">
+              <button class="faq-question" type="button"><span>Ile kosztuje hydraulik w Ząbkach?</span><span>+</span></button>
+              <div class="faq-answer"><p>Koszt zależy od rodzaju usługi i dostępu do instalacji. Drobne naprawy zaczynają się od kilkudziesięciu złotych, udrażnianie zlewu lub WC od ok. 150 zł. Cenę podajemy przez telefon, przed przyjazdem.</p></div>
+            </article>
+            <article class="faq-item">
+              <button class="faq-question" type="button"><span>Jak szybko dojedziecie do Ząbek?</span><span>+</span></button>
+              <div class="faq-answer"><p>Ząbki sąsiadują z Zielonką, więc dojazd jest krótki. Najczęściej jesteśmy na miejscu tego samego dnia, a w pilnych awariach reagujemy priorytetowo.</p></div>
+            </article>
+            <article class="faq-item">
+              <button class="faq-question" type="button"><span>Czy zajmujecie się awariami po godzinach?</span><span>+</span></button>
+              <div class="faq-answer"><p>Tak. W nagłych przypadkach, gdy leje się woda lub cofa kanalizacja, jesteśmy dostępni również wieczorami i w weekendy.</p></div>
+            </article>
+            <article class="faq-item">
+              <button class="faq-question" type="button"><span>Naprawiacie też instalacje w blokach?</span><span>+</span></button>
+              <div class="faq-answer"><p>Tak. Pracujemy w blokach, kamienicach i domach jednorodzinnych. W częściach wspólnych współpracujemy z administracją i wystawiamy fakturę VAT.</p></div>
+            </article>
+            <article class="faq-item">
+              <button class="faq-question" type="button"><span>Co zrobić, zanim przyjedziecie do zatkanego odpływu?</span><span>+</span></button>
+              <div class="faq-answer"><p>Najlepiej nie wlewać kolejnych porcji środków chemicznych. Potrafią utrudnić pracę i uszkodzić rury. Wystarczy zakręcić dopływ wody do danego przyboru.</p></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section id="kontakt" class="cta-section">
+        <div class="container">
+          <div class="final-cta reveal">
+            <div class="final-cta__content">
+              <div>
+                <h2>Potrzebujesz hydraulika w Ząbki?</h2>
+                <p>Opisz krótko problem przez telefon - łatwiej dobrać metodę i podać orientacyjny koszt. Działamy w Ząbki i okolicach.</p>
+              </div>
+              <div class="final-cta__box">
+                <strong>{phoneLabel}</strong>
+                <span>Hydraulik Zielonka - Ząbki i okolice</span>
+                <div style="height: 18px"></div>
+                <a class="btn-new btn-new--primary" href={phoneHref}>📞 Zadzwoń teraz</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INNE MIEJSCOWOŚCI -->
+      <section class="new-section">
+        <div class="container">
+          <h2 class="section-title" style="margin-bottom:18px">Działamy też w okolicy</h2>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-start">
+            <a class="btn-new btn-new--ghost" href="/hydraulik-marki">Hydraulik Marki</a>
+            <a class="btn-new btn-new--ghost" href="/hydraulik-kobylka">Hydraulik Kobyłka</a>
+            <a class="btn-new btn-new--ghost" href="/hydraulik-wolomin">Hydraulik Wołomin</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="new-footer">
+      <div class="container footer-grid">
+        <div>© 2026 Hydraulik Zielonka</div>
+        <div>Udrażnianie • Naprawy • Montaż armatury • Inspekcja kamerą</div>
+      </div>
+    </footer>
+
+    <a class="mobile-cta" href={phoneHref}>📞 Zadzwoń: {phoneLabel}</a>
+  </div>
+
+  <script>
+    // reveal
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); revealObs.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+    // FAQ
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.querySelector('.faq-question').addEventListener('click', () => {
+        document.querySelectorAll('.faq-item').forEach(o => { if (o !== item) o.classList.remove('is-open'); });
+        item.classList.toggle('is-open');
+      });
+    });
+  </script>
+</body>
+</html>
